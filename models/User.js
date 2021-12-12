@@ -9,7 +9,12 @@ email: {
     type:String,
 },
 
-thoughts: [],
+thoughts: [
+    {
+        type: Schema.Types.ObjectId,
+    ref: 'Thought'
+    }
+  ],
 
 friends: [],
 });

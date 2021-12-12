@@ -1,15 +1,34 @@
-// Thought
+const { Schema, model } = require('mongoose');
 
+const ThoughtSchema = new Schema({
+
+thoughtText: {
+    type: String,
+},
 // thoughtText
 // String
 // Required
 // Must be between 1 and 280 characters
 
-// createdAt
-// Date
-// Set default value to the current timestamp
-// Use a getter method to format the timestamp on query
+createdAt: {
+    type: Date,
+    default: Date.now
+  },
 
+  username: {
+      type: String,
+      ref: 'User',
+
+  },
+
+  reactions: [{ 
+      type: Schema.Types.ObjectId,
+        ref: 'Reaction'}]
+});
+  
+  const Thought = model('Thought', ThoughtSchema);
+
+module.exports = Thought;
 // username (The user that created this thought)
 // String
 // Required
