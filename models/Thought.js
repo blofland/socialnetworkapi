@@ -1,4 +1,30 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
+
+
+const ReactionSchema = new Schema({
+
+    reactionId: {
+          type: Schema.Types.ObjectId,
+          default: () => new Types.ObjectId()
+        },
+
+    reactionBody: {
+      type: String
+    },
+
+    username: {
+        type: String,
+        default: Date.now
+    },
+
+    date: {
+        type: Date,
+        default: Date.now,
+        get: createdAtVal => dateFormat(createdAtVal)
+      },
+     
+});
 
 const ThoughtSchema = new Schema({
 
@@ -12,7 +38,8 @@ thoughtText: {
 
 createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    get: createdAtVal => dateFormat(createdAtVal)
   },
 
   username: {
@@ -21,14 +48,13 @@ createdAt: {
 
   },
 
-  reactions: [{ 
-      type: Schema.Types.ObjectId,
-        ref: 'Reaction'}]
+  reactions: [ReactionSchema]
 });
   
   const Thought = model('Thought', ThoughtSchema);
+const Reaction = model('Reaction', ReactionSchema);
 
-module.exports = Thought;
+module.exports = {Reaction, Thought};
 // username (The user that created this thought)
 // String
 // Required
@@ -38,3 +64,9 @@ module.exports = Thought;
 
 // Schema Settings
 // Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+
+
+
+
+
+

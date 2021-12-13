@@ -1,28 +1,4 @@
-const { Schema, model } = require('mongoose');
 
-const ReactionSchema = new Schema({
-
-    reactionId: {
-      type: String
-    },
-    reactionBody: {
-      type: String
-    },
-
-    username: {
-        type: String,
-        default: Date.now
-    },
-
-    date: {
-      type: Date,
-      default: Date.now
-    }
-  });
-
-  const Reaction = model('Reaction', ReactionSchema);
-
-module.exports = Reaction;
 // reactionId
 // Use Mongoose's ObjectId data type
 // Default value is set to a new ObjectId
