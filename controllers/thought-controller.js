@@ -1,4 +1,4 @@
-const {Thought} = require("../models/Thought")
+const {Thought, Reaction} = require("../models/Thought")
 const ThoughtController = {
     // get all thoughtss
     getAllThought(req, res) {
@@ -65,10 +65,11 @@ const ThoughtController = {
 
     //Add reaction
     addReaction({ params, body }, res) {
-        Reaction.findOneAndUpdate(
-        { _id: params.commentId },
-        { $push: { replies: body } },
-        { new: true }
+        console.log(params, body)
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reactions: body } },
+            { new: true }
         )
         .then(dbThoughtData => {
             if (!dbThoughtData) {
@@ -81,10 +82,11 @@ const ThoughtController = {
     },
     // remove reaction
     removeReaction({ params }, res) {
-        Reaction.findOneAndUpdate(
-        { _id: params.commentId },
-        { $pull: { replies: { replyId: params.replyId } } },
-        { new: true }
+        console.log({params})
+        Thought.findOneAndUpdate(
+        { _id: params.thoughtId },
+        { $pull: { reactions: { _id: params.reactionId } } },
+        { new: false }
     )
         .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => res.json(err));

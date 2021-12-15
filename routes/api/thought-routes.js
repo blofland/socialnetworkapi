@@ -13,11 +13,11 @@ const {
   } = require('../../controllers/thought-controller');
 
 router
-  .route('/:thoughtId/:reactions')
+  .route('/:thoughtId/reactions')
   .post(addReaction)
 
   router
-  .route('/:thoughtId/:reactionId')
+  .route('/:thoughtId/reactions/:reactionId')
   .delete(removeReaction)
 
 // Set up GET all and POST at /api/Thoughts
