@@ -8,9 +8,10 @@ const UserSchema = new Schema ({
 },
 
 email: {
-    type:String,
+    type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
 },
 
 thoughts: [

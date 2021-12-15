@@ -4,11 +4,11 @@ const UserController = {
     // get all users
     getAllUser(req, res) {
       User.find({})
-      .populate({
-        path: 'thoughts',
-        select: '-__v'
-      })
-      .select('-__v')
+      // .populate({
+      //   path: 'thoughts',
+      //   select: '-__v'
+      // })
+      // .select('-__v')
       .sort({ _id: -1})
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
@@ -22,10 +22,10 @@ const UserController = {
     // get one User by id
     getUserById({ params }, res) {
       User.findOne({ _id: params.id })
-      .populate({
-        path: 'thoughts',
-        select: '-__v'
-      })
+      // .populate({
+      //   path: 'thoughts',
+      //   select: '-__v'
+      // })
       .select('-__v')
       .sort({ _id: -1})
         .then(dbUserData => {
@@ -45,10 +45,14 @@ const UserController = {
  
 
 // createUser
-createUser({ body }, res) {
-  User.create(body)
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => res.status(400).json(err));
+async createUser({ body }, res) {
+  try{
+    const dbUserData = await User.create(body)
+    if(!dbUserData._id) {res.status(400).json({message: "Bad Request"})}
+    else {res.json(dbUserData)}
+  } catch ({message}){
+    res.status(400).json(message);
+  }
 }, 
 
 // update User by id
