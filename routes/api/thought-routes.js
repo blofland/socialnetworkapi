@@ -14,7 +14,7 @@ const {
 
 router
   .route('/:thoughtId/:reactions')
-  .put(addReaction)
+  .post(addReaction)
 
   router
   .route('/:thoughtId/:reactionId')

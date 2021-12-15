@@ -3,7 +3,6 @@ const { Thought, Reaction } = require('../models');
 const reactionController = {
   // add reaction to thought
   addReaction({ params, body }, res) {
-    console.log(body);
     Reaction.create(body)
       .then(({ _id }) => {
         return Thought.findOneAndUpdate(
